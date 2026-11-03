@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickOrder - Módulo de Cajero</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f6f8;
+            color: #212529;
+        }
+        .pos-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .panel {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        /* Cumplimiento estricto de RNF-01: mínimo 44x44 píxeles para botones táctiles */
+        .btn-producto {
+            min-width: 44px;
+            min-height: 44px;
+            padding: 16px 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: #0d6efd;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+            transition: background-color 0.1s ease;
+        }
+        .btn-producto:active {
+            background-color: #0a58ca;
+        }
+        .btn-SimulationError {
+            background-color: #6c757d;
+            margin-top: 16px;
+        }
+        .alerta-discreta {
+            display: none;
+            background-color: #fff3cd;
+            color: #664d03;
+            border: 1px solid #ffecb5;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px 6px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.95rem;
+        }
+        .total-section {
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 2px solid #212529;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="pos-layout">
+        <!-- Panel de Selección de Productos -->
+        <section class="panel">
+            <h2>Menú de Productos</h2>
+            <div id="alerta-error" class="alerta-discreta" role="alert"></div>
+            <div id="contenedor-menu" class="menu-grid"></div>
+            
+            <!-- Botón auxiliar para simular el Caso Error (CA-01) en navegador -->
+            <button class="btn-producto btn-SimulationError" onclick="agregarAlTicket(null)">
+                Simular Clic Erróneo (ID Nulo)
+            </button>
+        </section>
+
+        <!-- Panel del Ticket Temporal -->
+        <aside class="panel">
+            <h2>Ticket Actual</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                        <th>P. Unit.</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-ticket"></tbody>
+            </table>
+            <div class="total-section">
+                Total: $<span id="total-acumulado">0.00</span>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
